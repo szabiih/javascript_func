@@ -55,6 +55,27 @@ table.appendChild(tbody);
 //  ez még nincs kész (folytatni...)
 for (const object of arr){
     const tr = document.createElement('tr');
-    const td = document.createElement('td');
-    
+    tbody.appendChild(tr);
+
+    const tdTheme = document.createElement('td');
+    tdTheme.innerText = object.theme;
+    tr.appendChild(tdTheme);
+
+    const tdTime = document.createElement('td');
+    tdTime.innerText = object.time;
+    tr.appendChild(tdTime);
+
+    const tdSci1 = document.createElement('td');
+    tdSci1.innerText = object.scientist1;
+
+    if (object.scientist2 === undefined) {
+        tdSci1.colSpan = 2;
+        tr.appendChild(tdSci1);
+    }
+    else {
+        tr.appendChild(tdSci1);
+        const tdSci2 = document.createElement('td');
+        tdSci2.innerText = object.scientist2;
+        tr.appendChild(tdSci2);
+    }
 }
