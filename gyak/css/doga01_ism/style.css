@@ -1,0 +1,60 @@
+/* Tábla minden elemére beállítunk szegélyt, és beállítjuk az átlapolódást */
+table, tr, td, th {
+    border: 2px black solid;
+    border-collapse: collapse;
+}
+
+
+/* soros id alatt található táblasorok közül minden másodikra beállítunk 
+aqua háttérszínt az nth-child pszeudóosztály segítségével */
+#soros tr:nth-child(even) {
+    background-color: aqua;
+}
+
+
+/* oszlopos id alatt található táblacellák közül 
+beállítunk az utolsóra és hátulról a 3. cellára háttérszínt a 
+last-child és az nth-last-child() pszeudóosztály segítségével */
+#oszlopos td:last-child {
+    background-color: cornflowerblue;
+}
+
+#oszlopos td:nth-last-child(3) {
+    background-color: cornsilk;
+}
+
+
+/* A gyakorlas osztállyal rendelkező elem alatt közvetlenül 
+elhelyezkedő error osztállyal rendelkező elemekre a > kombinátor 
+segítségével beállítunk piros háttérszínt és fehér betüszint */
+.gyakorlas > p[class="error"] {
+    background-color: red;
+    color: white;
+}
+
+
+/* A + kombinátor segítségével a gyakorlas osztályon belüli 
+inputok után közvetlenül  elhelyezkedő bekezdés elemekre, 
+amelyek az error osztállyal rendelkeznek  piros betűszínt állítunk */
+.gyakorlas input + p[class="error"] {
+    color: red;
+}
+
+
+/* A has pszeudóosztály és attributum szelektor segítségével 
+beállítunk zöld szegélyt azokra a bekezdésekre, amelyek az error 
+osztállyal rendelkeznek és az olyan gyakorlas osztállyal rendelkező 
+elemen belül van, amelyen belül van egy olyan hiperhivatkozás amely # értékkel 
+rendelkezik és fölé viszik az egeret */
+.gyakorlas:has(a[href="#"]:hover) p[class="error"] {
+    border: 5px green solid;
+}
+
+
+/* A has pszeudóosztály és attributum szelektor segítségével beállítunk
+zöld szegélyt azokra a div elemekre amelyek közvetlenül egy olyan gyakorlas
+osztállyal rendelkező elemen belül van, amelyen belül van egy olyan
+hiperhivatkozás amely az aszf.html értékkel rendelkezik és fölé viszik az egeret */
+.gyakorlas:has(a[href="aszf.html"]:hover) > div {
+    border: 5px green solid;    
+}
