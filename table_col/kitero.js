@@ -133,3 +133,15 @@ for (const object of arr) {
         tr.appendChild(td05);
     }
 }
+
+/**
+ * A függvény létrehoz egy táblázat cella elemet
+ * @param {string} cellType                 A cella típusa
+ * @param {string} cellContent              A cella tartalma
+ * @param {HTMLTableRowElement} cellRow     A táblázat sora, amihez hozzá kapcsoljuk
+ */
+function createCellElement(cellType, cellContent, cellRow){
+    const cell = document.createElement(cellType);
+    cell.innerText = cellContent;
+    cellRow.appendChild(cell);
+}
