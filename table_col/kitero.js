@@ -81,6 +81,8 @@ const tr01 = document.createElement('tr');
 thead.appendChild(tr01);
 
 //  Header cells
+const header = ['Márka', 'Modell', 'Megjelenés éve', 'Tervező(k)'];
+/*
 const th01 = document.createElement('th');
 th01.innerText = 'Márka';
 tr01.appendChild(th01);
@@ -97,6 +99,13 @@ const th04 = document.createElement('th');
 th04.innerText = 'Tervező(k)';
 th04.colSpan = 2;
 tr01.appendChild(th04);
+*/
+for (let index in header){      //  index itt elvileg string, tehát nem jó a ===
+    const th = createCellElement('th', header[index], tr01);
+    if (index == 3){
+        th.colSpan = 2;
+    }
+}
 
 //  ...
 const tbody = document.createElement('tbody');
@@ -106,7 +115,8 @@ table.appendChild(tbody);
 for (const object of arr) {
     const tr = document.createElement('tr');
     tbody.appendChild(tr);
-
+    
+    /*
     const td01 = document.createElement('td');
     td01.innerText = object.brand;
     tr.appendChild(td01);
@@ -120,17 +130,34 @@ for (const object of arr) {
     tr.appendChild(td03);
 
     const td04 = document.createElement('td');
-    td04.innerText = object.designer1;
-    
+    */
+
+    createCellElement('td', object.brand, tr);
+    createCellElement('td', object.model, tr);
+    createCellElement('td', object.year, tr);
+
+    //  innen folytatni...
     if (object.designer2 === undefined) {
+        /*
+        td04.innerText = object.designer1;
         td04.colSpan = 2;
         tr.appendChild(td04);
+        */
+        const tdDesigner = createCellElement('td', object.designer1, tr);
     }
     else {
+        /*
         tr.appendChild(td04);
+
         const td05 = document.createElement('td');
         td05.innerText = object.designer2;
         tr.appendChild(td05);
+        */
+        
+        tdDesigner.colSpan = 2;
+
+        createCellElement('td', object.designer1, tr);
+        createCellElement('td', object.designer2, tr);
     }
 }
 
@@ -139,9 +166,11 @@ for (const object of arr) {
  * @param {string} cellType                 A cella típusa
  * @param {string} cellContent              A cella tartalma
  * @param {HTMLTableRowElement} cellRow     A táblázat sora, amihez hozzá kapcsoljuk
+ * @returns {HTMLTableCellElement}          A létrehozott cella
  */
 function createCellElement(cellType, cellContent, cellRow){
     const cell = document.createElement(cellType);
     cell.innerText = cellContent;
     cellRow.appendChild(cell);
+    return cell;
 }
