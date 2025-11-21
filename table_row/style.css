@@ -1,64 +1,58 @@
-table, th, td {
-    border: 1px dotted black;
+table, thead, tr, th, td{
+    border: 1px, dotted, red;
     border-collapse: collapse;
 }
 
-tr td:nth-last-child(3) {
-    background-color: lightskyblue;
-    color: white;
+tr td:last-child, tr td:nth-last-child(3){
+    background-color: lightblue;
 }
 
-tr td:last-child {
-    background-color: blue;
-    color: white;
-}
-/*
-#gyakorlas p + button {
-    background-color: darkcyan;
-}
-*/
-#gyakorlas button:has(+p) {
-    background-color: darkcyan;
+#gyakorlas {
+    margin-top: 10px;
+    background-color: lightpink;
+    color: darkmagenta;
 }
 
-#gyakorlas button:not(:has(+p)) {
-    background-color: lightgreen;
+#gyakorlas button:has(+p){
+    background-color: khaki;
 }
 
-#gyakorlas button + button:not(:has(+p)) {      /* Első elem is belekerül: #gyakorlas button:has(+ button):not(:has(+ p)) */
-    background-color: yellow;
+#gyakorlas button:nth-child(2) {
+    background-color: seashell;
 }
 
-/* A 9. feladathoz már javascript is kellene :( */
-
-
-
-
-
-#gyakorlas + a:hover{
-    color: blueviolet;
+#gyakorlas button:not(:has(+p)){
+    background-color: darksalmon;
 }
 
-#gyakorlas:has(+ a:hover) button{
-    background-color: burlywood;
+#gyakorlas:has(+a:hover) button{
+    background-color: aquamarine;
 }
 
-tr:not(:has(td[rowspan]))+ tr:not(:has(td[rowspan])):hover td{
-    background-color: brown;
-
+tr:not(:has(td[rowspan]))+tr:not(:has(td[rowspan])):hover td{
+    background-color: bisque;
 }
 
-tbody tr:has(td[rowspan]):hover td{
-    background-color: chartreuse;
+tr:has(td[rowspan]):hover td{
+    background-color: coral;
 }
 
-tbody tr:has(td[rowspan]):hover + tr td{
-    background-color: darkorange;
+tr:has(td[rowspan]):hover + tr td{
+    background-color: coral;
 }
-tbody tr:has(td[rowspan]):has(+tr:hover) td {
-    background-color: brown
-    ;
+
+tr:has(td[rowspan]):has(+tr:hover) td{
+    background-color: coral;
 }
-tr:not(:has(td[rowspan])):hover td{
-    background-color: brown;
+
+tr:has(td[rowspan]):has(+tr:hover) + tr td{
+    background-color: coral;
+}
+
+button {
+    margin-bottom: 10px;
+}
+
+.marked {
+    color: red;
 }

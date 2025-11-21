@@ -1,6 +1,4 @@
-const object = {
-
-}
+const object = {}
 let number = 67;    //  6-7, I just bipped right on the highway (Bip, bip)
 if (number > 5){
     object.name = "LeBron James";

@@ -1,11 +1,17 @@
+//használható változók: let, const
+//const: értéke nem változtatható (állandó)
+//let: értéke később megváltoztatható
+
+//változó deklarálás JSDoc-kal
 /**
  * @type {string}
  */
-const variable01 = ":)";
+const variable01 = ":)";            //nem változtatható érték
 console.log(variable01);
 
+//tömb deklarálás
 /**
- * @type {Array<string>}
+ * @type {Array<string>}    - stringeket tartalmazó tömb  -  {string[]} így is lehetne
  */
 const numbers = ["egy", "kettő", "három"];
 console.log(numbers[0]);
@@ -13,20 +19,28 @@ console.log(numbers[1]);
 console.log(numbers[2]);
 
 // tömb kiíratása
+
+//tömb bejárása for ciklussal (index alapján)
 for (let i = 0; i < numbers.length; i++) {
     console.log(numbers[i]);
 }
+
+//tömb bejárása for...of ciklussal (értékek alapján)
 for (let num of numbers) {
     console.log(num);
 }
+
+//tömb bejárása for...in ciklussal (indexek alapján)
+//"for...in" a kulcsokat (indexeket) adja vissza, ezért a tömb elemeit a kulcs segítségével kell lekérni
 for(let index in numbers){
     console.log(`${index} : ${numbers[index]}`);
 }
 console.log(numbers.toString());
 console.log(numbers.join(" - "));
 
+//objektum deklarálása (kulcs-érték párokkal)
 /**
- * @type {{name:string,age:number}}
+ * @type {{name:string,age:number}} - ez egy objektum, aminek két tulajdonsága van: név: string, age: number
  */
 const a = {
     name : "Szabolcs",
@@ -35,142 +49,3 @@ const a = {
 console.log(a.name);
 console.log(a.age);
 console.log(a);
-
-//  H F ->
-/**
- * @type {{brand:string,model:string,year:string,designer1:string,designer2?:string}[]}
- */
-const arr = [
-    {
-        brand: 'Rolex',
-        model: 'Daytona',
-        year: '1963',
-        designer1: 'Rolex Design Team'
-    },
-    {
-        brand: 'Omega',
-        model: 'Speedmaster',
-        year: '1957',
-        designer1: 'Claude Baillod',
-        designer2: 'Pierre Moinat'
-    },
-    {
-        brand: 'Seiko',
-        model: 'Astron',
-        year: '1969',
-        designer1: 'Suwa Seikosha Team',
-    },
-    {
-        brand: 'Tissot',
-        model: 'Seastar',
-        year: '1960',
-        designer1: 'Charles Tissot',
-        designer2: 'Jacques-David LeCoultre'
-    }
-]
-
-//  ...
-const table = document.createElement('table');
-document.body.appendChild(table);
-
-const thead = document.createElement('thead');
-table.appendChild(thead);
-
-//  Row
-const tr01 = document.createElement('tr');
-thead.appendChild(tr01);
-
-//  Header cells
-const header = ['Márka', 'Modell', 'Megjelenés éve', 'Tervező(k)'];
-/*
-const th01 = document.createElement('th');
-th01.innerText = 'Márka';
-tr01.appendChild(th01);
-
-const th02 = document.createElement('th');
-th02.innerText = 'Modell';
-tr01.appendChild(th02);
-
-const th03 = document.createElement('th');
-th03.innerText = 'Megjelenés éve';
-tr01.appendChild(th03);
-
-const th04 = document.createElement('th');
-th04.innerText = 'Tervező(k)';
-th04.colSpan = 2;
-tr01.appendChild(th04);
-*/
-for (let index in header){      //  index itt elvileg string, tehát nem jó a ===
-    const th = createCellElement('th', header[index], tr01);
-    if (index == 3){
-        th.colSpan = 2;
-    }
-}
-
-//  ...
-const tbody = document.createElement('tbody');
-table.appendChild(tbody);
-
-//  For Loop
-for (const object of arr) {
-    const tr = document.createElement('tr');
-    tbody.appendChild(tr);
-    
-    /*
-    const td01 = document.createElement('td');
-    td01.innerText = object.brand;
-    tr.appendChild(td01);
-
-    const td02 = document.createElement('td');
-    td02.innerText = object.model;
-    tr.appendChild(td02);
-
-    const td03 = document.createElement('td');
-    td03.innerText = object.year;
-    tr.appendChild(td03);
-
-    const td04 = document.createElement('td');
-    */
-
-    createCellElement('td', object.brand, tr);
-    createCellElement('td', object.model, tr);
-    createCellElement('td', object.year, tr);
-
-    //  innen folytatni...
-    if (object.designer2 === undefined) {
-        /*
-        td04.innerText = object.designer1;
-        td04.colSpan = 2;
-        tr.appendChild(td04);
-        */
-        const tdDesigner = createCellElement('td', object.designer1, tr);
-    }
-    else {
-        /*
-        tr.appendChild(td04);
-
-        const td05 = document.createElement('td');
-        td05.innerText = object.designer2;
-        tr.appendChild(td05);
-        */
-        
-        tdDesigner.colSpan = 2;
-
-        createCellElement('td', object.designer1, tr);
-        createCellElement('td', object.designer2, tr);
-    }
-}
-
-/**
- * A függvény létrehoz egy táblázat cella elemet
- * @param {string} cellType                 A cella típusa
- * @param {string} cellContent              A cella tartalma
- * @param {HTMLTableRowElement} cellRow     A táblázat sora, amihez hozzá kapcsoljuk
- * @returns {HTMLTableCellElement}          A létrehozott cella
- */
-function createCellElement(cellType, cellContent, cellRow){
-    const cell = document.createElement(cellType);
-    cell.innerText = cellContent;
-    cellRow.appendChild(cell);
-    return cell;
-}

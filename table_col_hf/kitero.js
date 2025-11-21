@@ -1,4 +1,5 @@
-const number01 = 67;
+//void - undefined értéket vesz fel, nincs visszatérési értéke, azaz a függvény lefut, de nem ad vissza semmit amit eltudnánk tárolni változóban
+const number01 = 67;            //  globális const változó, minden függvény eléri, de nem módosíthatja
 
 //  hoisting
 operation01();
@@ -9,7 +10,7 @@ console.log(value);
 
 /**
  * A függvény kiírja, hogy "something"
- * @returns {void}
+ * @returns {void}  nem fog semmilyen értékkel visszatérni
  */
 function operation01(){
     console.log("something");
@@ -17,7 +18,7 @@ function operation01(){
 
 /**
  * A függvény kiír egy globális scope-al rendelkező változót
- * @returns {void}
+ * @returns {void}  void típus azaz nincs visszatérési értéke
  */
 function operation02(){
     console.log(number01);
@@ -28,7 +29,7 @@ function operation02(){
  * @returns {void}
  */
 function operation03(){
-    const number02 = 10;
+    const number02 = 10;        //  csak ebben a függvényben (scope-on) létezik, kívülről nem érhető el
     console.log(number02);
 }
 
