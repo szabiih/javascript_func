@@ -1,0 +1,216 @@
+body {
+    background-color: rgb(161, 255, 233);
+}
+
+.differentTheme {
+    background-color: red;
+}
+
+.other {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+}
+
+.color01 {
+    background-color: cornflowerblue;
+}
+
+.color02 {
+    background-color: teal;
+}
+
+.color03 {
+    background-color: darkorchid;
+}
+
+.container {
+    display: flex;                      /* FLEXBOX meghatározása */
+    flex-direction: column;             /* Elemek követési iránya */
+    justify-content: center;            /* Vízszintes tengelyen való elrendezés */
+    gap: 50px;                          /* Elemek közötti távolság */
+
+    background-color: lightcyan;
+    margin: 5% 10%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+/* Az internet a barátod ;) */
+button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid #4f4f4f;
+    border-radius: 4px;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    font-size: 19px;
+    cursor: pointer;
+    color: black;
+    z-index: 1;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+button:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+button:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #39bda7;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+button:hover {
+    color: #ffffff;
+    border: 1px solid #39bda7;
+}
+
+button:hover:before {
+    top: -35%;
+    background-color: #39bda7;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+button:hover:after {
+    top: -45%;
+    background-color: #39bda7;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+input {
+    max-width: 190px;
+    height: 44px;
+    background-color: #05060f0a;
+    border-radius: .5rem;
+    padding: 0 1rem;
+    border: 2px solid transparent;
+    font-size: 1rem;
+    transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
+    }
+
+label {
+    display: block;
+    margin-bottom: .3rem;
+    font-size: .9rem;
+    /*font-weight: bold;*/
+    color: #05060f99;
+    transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
+}
+
+input:hover, input:focus, input-group:hover input {
+    outline: none;
+    border-color: #05060f;
+}
+
+label, input:focus {
+    color: #05060fc2;
+}
+
+select {
+    appearance: none;
+    @supports (appearance: base-select) {
+        &,
+        &::picker(select) {
+        appearance: base-select;
+        }
+    }
+}
+
+select {
+    min-width: 300px;
+    align-items: center;
+    color: white;
+    padding-block: 10px;
+    padding-inline: 10px 30px; 
+    cursor: pointer;
+    /*font-weight: 700;*/
+    background: rgb(105, 213, 255)
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23FFF' class='size-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E%0A")
+        right 10px center / 20px no-repeat;
+    @supports (appearance: base-select) {
+        padding-inline: 10px;
+        background-image: none;
+        &::picker-icon {
+        content: "";
+        width: 20px;
+        height: 20px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23FFF' class='size-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E%0A");
+        transition: rotate 0.2s ease-out;
+        }
+        &:open::picker-icon {
+        rotate: 180deg;
+        }
+        &::picker(select) {
+        padding: 0;
+        position-anchor: --html;
+        margin-top: 5px;
+        background: white;
+        border-radius: 5px;
+        font-weight: 400;
+        bottom: 0;
+        width: 100%;
+        translate: 0 100dvh;
+        transition: translate 0.5s ease-out, opacity 0.5s ease-out, overlay 0.5s,
+            display 0.5s;
+
+        transition-behavior: allow-discrete;
+        }
+        &:open::picker(select) {
+        bottom: 0;
+        width: 100%;
+        translate: 0;
+        opacity: 1;
+        overflow: auto;
+        @starting-style {
+            translate: 0 100dvh;
+            opacity: 0;
+            height: 0;
+        }
+        }
+        option {
+        padding: 10px;
+        border-top: 1px solid lightblue;
+        cursor: pointer;
+        transition-property: color, background;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-out;
+        &:where(:hover, :focus, :active) {
+            background: rgb(161, 220, 252);
+            color: white;
+        }
+        &:checked {
+            background: rgb(58, 87, 255);
+            color: white;
+        }
+        &::checkmark {
+            display: none;
+        }
+        &:first-child {
+            border: 0;
+        }
+        }
+    }
+}
