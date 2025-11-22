@@ -5,6 +5,11 @@
 let board;
 let boardWidth = 360;                           /* A háttérkép alapján (a kép szélessége) */
 let boardHeight = 640;                          /* A háttérkép alapján (a kép magassága) */
+/**
+ * @type {CanvasRenderingContext2D}             A getContext('2d') metódus visszaad egy 2D rajzoló kontextust, ami a CanvasRenderingContext2D osztály egy példánya.
+ *                                              Ez az objektum tartalmazza az összes metódust és tulajdonságot, amivel 2D rajzolást lehet végezni a canvas-on (fillRect, strokeRect, beginPath, lineTo, stb).
+ *                                              chatgpt írta ..
+ */
 let context;
 
 //  B I R D
@@ -43,7 +48,16 @@ window.addEventListener('load', function(){
     birdImg.addEventListener('load', function(){
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);            /* Rajzol a Canvas-ba egy képet - context.drawImage(img, x, y, width, height)*/
     });
-    
-     
 
+    requestAnimationFrame(update);              /* A requestAnimationFrame() metódus jelzi a böngészőnek, hogy animációt szeretnél futtatni, és kéri, hogy a böngésző hívjon meg egy megadott függvényt az animáció frissítéséhez a következő újrafestés előtt. */
 });
+
+function update(){
+    requestAnimationFrame(update);
+    context.clearRect(0, 0, board.width, board.height);                                 /* Kitörli a Canvas-on belüli rajzolt képkockákat - context.clearRect(x, y, width, height) */
+
+    //  the bird is continuously updated (habár ezt a dupla requestAnimationFrame-et nem teljesen értem ..)
+    context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height)
+
+
+}
