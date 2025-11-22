@@ -1,0 +1,10 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;                      /* FLEXBOX meghatározása */
+    justify-content: center;            /* Vízszintes tengelyen való elrendezés */
+}
+
+#board {
+    /* background-color: skyblue; */
+    background-image: url(./img/flappybirdbg.png);
+}
