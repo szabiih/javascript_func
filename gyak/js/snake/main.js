@@ -19,6 +19,9 @@ let context;
 let snakeX = blockSize * 5;
 let snakeY = blockSize * 5;
 
+//  S N A K E  B O D Y
+const snakeBody = [];
+
 //  F O O D
 let foodX;
 let foodY;
@@ -55,6 +58,7 @@ function update(){
 
     //  logic for checking collision between two squares
     if (snakeX == foodX && snakeY == foodY){
+        snakeBody.push([foodX, foodY]);
         placeFood();
     }
 
@@ -63,7 +67,9 @@ function update(){
     snakeX += velocityX * blockSize;
     snakeY += velocityY * blockSize;
     context.fillRect(snakeX, snakeY, blockSize, blockSize);
-
+    for (let i = 0; i < snakeBody.length; i++){
+        context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
+    }
 }
 
 function changeDirection(e){
