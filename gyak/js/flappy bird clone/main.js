@@ -1,5 +1,6 @@
 //  https://www.youtube.com/watch?v=jj5ADM2uywg
 //  https://www.youtube.com/watch?v=UQA5jG-yh78
+//  https://www.youtube.com/watch?v=94Vw8teCElM
 
 //  B O A R D
 /**
@@ -21,10 +22,9 @@ let birdWidth = 34;                             /* A kép alapján (a kép szél
 let birdHeight = 24;                            /* A kép alapján (a kép magassága) */
 let birdX = boardWidth / 8;                     /* Meghatározza pontosan hol legyen a bird a képen.. (birdX és birdY) */
 let birdY = boardHeight / 2;
-/**
- * @type {HTMLImageElement}
- */
-let birdImg;
+/*let birdImg;*/
+let birdImgs = [];
+let birdImgsIndex = 0;
 
 let bird = {
     x : birdX,
@@ -91,11 +91,17 @@ window.addEventListener('load', function(){
     /*context.fillRect(bird.x, bird.y, bird.width, bird.height);                          /* Rajzol a Canvas-ba egy téglalapot -  context.fillRect(x, y, width, height)*/
 
     //  load the image
-    birdImg = new Image();                      /* The Image object represents an HTML <img> element. */
-    birdImg.src = './img/flappybird.png';       /* A "load" esemény a kép betöltése után fut le. (addEventListener nélkül nem működik a .drawImage - de nem tudom miért nem...) */
-    birdImg.addEventListener('load', function(){
+    /*birdImg = new Image();                      /* The Image object represents an HTML <img> element. */
+    /*birdImg.src = './img/flappybird.png';       /* A "load" esemény a kép betöltése után fut le. (addEventListener nélkül nem működik a .drawImage - de nem tudom miért nem...) */
+    /*birdImg.addEventListener('load', function(){
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);            /* Rajzol a Canvas-ba egy képet - context.drawImage(img, x, y, width, height)*/
-    });
+    /*});*/
+
+    for (let i = 0; i < 4; i++){
+        let BirdImg = new Image();
+        BirdImg.src = `./animation/flappybird${i}.png`;
+        birdImgs.push(BirdImg);
+    }
 
     topPipeImg = new Image();
     topPipeImg.src = './img/toppipe.png';
@@ -105,6 +111,7 @@ window.addEventListener('load', function(){
 
     requestAnimationFrame(update);              /* A requestAnimationFrame() metódus jelzi a böngészőnek, hogy animációt szeretnél futtatni, és kéri, hogy a böngésző hívjon meg egy megadott függvényt az animáció frissítéséhez a következő újrafestés előtt. */
     setInterval(placePipes, 1500);              /* A setInterval()metódus meghatározott időközönként (milliszekundumban - ebben az esetben 1.5 másodpercenként) hív meg egy függvényt. A metódus addig hívja meg a függvényt, amíg clearInterval()meg nem hívják, vagy az ablakot be nem zárják. - myInterval = setInterval(function, milliseconds); */
+    setInterval(animateBird, 100);              /* 1/10 másodpercenként*/
     document.addEventListener('keydown', moveBird);
 });
 
@@ -119,10 +126,13 @@ function update(){
     velocityY += gravity;
     /*bird.y += velocityY;*/
     bird.y = Math.max(bird.y + velocityY, 0);   /* Korlátozzuk a bird.y értékét, hogy ne tudja meghaladni (negatív értékbe szaladni) a canvas tetejét + hozzáadjuk a gravitáció vagy ugrást (velocityY-el való manipuláció ) */
-    context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+    /*context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);*/
+    context.drawImage(birdImgs[birdImgsIndex], bird.x, bird.y, bird.width, bird.height);
+    /* Alapból itt volt az animateBird függvény tartalma, viszont úgy túl gyors volt az animáció 60fps (update függvény másodpercenkénti hívásai) - ezért a setInterval beépített függvénnyel lelassítottuk*/
 
     if (bird.y > board.height){
         gameOver = true;
+        hitSound.play();
     }
 
     //  the pipe is continuously updated
@@ -158,6 +168,11 @@ function update(){
         bgm.pause();
         bgm.currentTime = 0;
     }
+}
+
+function animateBird(){                         /* Ez folyamatos - ugrástól független */
+    birdImgsIndex++;                            /* Következő képre léptetés */
+    birdImgsIndex %= birdImgs.length;           /* OutOfRange miatt - ne mehessen ki a tömbből (3 után vissza ugrik nullára) ; Ha az osztandó (bal oldali szám) kisebb, mint az osztó (jobb oldali szám), akkor a maradékos osztás eredménye maga az osztandó. */
 }
 
 function placePipes(){
