@@ -78,6 +78,7 @@ function update(){
     if (snakeBody.length){
         snakeBody[0] = [snakeX, snakeY];
     }
+    console.log(`${snakeBody.length} - ${(snakeBody.length) ? snakeBody[0] : snakeBody[0]}`);                         /* (condition) ? expressionTrue : expressionFalse; */
 
     //  the snake is continuously updated
     context.fillStyle = 'lime';
