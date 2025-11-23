@@ -16,25 +16,32 @@ const cols = 20;
 let context;
 
 //  S N A K E  H E A D
-const snakeX = blockSize * 5;
-const snakeY = blockSize * 5;
+let snakeX = blockSize * 5;
+let snakeY = blockSize * 5;
 
 //  F O O D
 let foodX;
 let foodY;
+
+//  P H Y S I C S
+let velocityX = 0;
+let velocityY = 0;
+
 
 
 /* The window object is supported by all browsers. It represents the browser's window. */
 /* All global JavaScript objects, functions, and variables automatically become members of the window object. */
 /* A "load" esemény az oldal teljes betöltődése után fut le.*/
 window.addEventListener('load', function(){
-    board = this.document.getElementById('board');
+    board = document.getElementById('board');
     board.height = rows * blockSize;
     board.width = cols * blockSize;
     context = board.getContext('2d');            /* The getContext() method returns an object with tools (methods) for drawing. */
 
     placeFood();
-    update();
+    document.addEventListener('keyup', changeDirection);
+    /*update();*/
+    setInterval(update, 1000/10);          /* A setInterval()metódus meghatározott időközönként (milliszekundumban - ebben az esetben 0.1 másodpercenként) hív meg egy függvényt. A metódus addig hívja meg a függvényt, amíg clearInterval()meg nem hívják, vagy az ablakot be nem zárják. - myInterval = setInterval(function, milliseconds); */
 });
 
 function update(){
@@ -44,11 +51,32 @@ function update(){
 
     //  the snake head is continuously updated
     context.fillStyle = 'lime';
+    snakeX += velocityX * blockSize;
+    snakeY += velocityY * blockSize;
     context.fillRect(snakeX, snakeY, blockSize, blockSize);
 
     //  the food is continuously updated
     context.fillStyle = 'red';
     context.fillRect(foodX, foodY, blockSize, blockSize);
+}
+
+function changeDirection(e){
+    if (e.code == 'ArrowUp'){
+        velocityX = 0;
+        velocityY = -1;
+    }
+    else if (e.code == 'ArrowDown'){
+        velocityX = 0;
+        velocityY = 1;
+    }
+    else if (e.code == 'ArrowLeft'){
+        velocityX = -1;
+        velocityY = 0;
+    }
+    else if (e.code == 'ArrowRight'){
+        velocityX = 1;
+        velocityY = 0;
+    }
 }
 
 function placeFood(){
