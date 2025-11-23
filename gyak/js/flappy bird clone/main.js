@@ -124,6 +124,11 @@ function update(){
         }
     }
 
+    //  clear pipes
+    while (pipeArray.length > 0 && pipeArray[0].x < -pipeWidth){         /* ha a pipe jobb sarka kiment a canvas tag-ből és van már pipe-unk a tömbben */
+        pipeArray.shift();                      /* eltávolítja az első elemet a tömbből (az első index-ű pipe-ot ami már nem látható a helyet és csak foglalja a memóriában a helyet) */
+    }
+
     //  score
     context.fillStyle = 'white';
     context.font = '45px sans-serif';
