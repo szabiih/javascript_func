@@ -51,6 +51,8 @@ let bottomPipeImg;
 
 //  P H Y S I C S
 let velocityX = -2;                             /* A csövek balra történő mozgásának a sebessége */
+let velocityY = 0;                              /* A madár felfelé történő mozgásának a nagysága */
+let gravity = 0.4;                              /* A madár lefelé történő mozgásának a nagysága */
 
 
 
@@ -82,6 +84,7 @@ window.addEventListener('load', function(){
 
     requestAnimationFrame(update);              /* A requestAnimationFrame() metódus jelzi a böngészőnek, hogy animációt szeretnél futtatni, és kéri, hogy a böngésző hívjon meg egy megadott függvényt az animáció frissítéséhez a következő újrafestés előtt. */
     setInterval(placePipes, 1500);              /* A setInterval()metódus meghatározott időközönként (milliszekundumban - ebben az esetben 1.5 másodpercenként) hív meg egy függvényt. A metódus addig hívja meg a függvényt, amíg clearInterval()meg nem hívják, vagy az ablakot be nem zárják. - myInterval = setInterval(function, milliseconds); */
+    document.addEventListener('keydown', moveBird);
 });
 
 function update(){
@@ -89,13 +92,15 @@ function update(){
     context.clearRect(0, 0, board.width, board.height);                                 /* Kitörli a Canvas-on belüli rajzolt képkockákat - context.clearRect(x, y, width, height) */
 
     //  the bird is continuously updated (habár ezt a dupla requestAnimationFrame-et nem teljesen értem ..)
+    velocityY += gravity;
+    bird.y += velocityY;
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     //  the pipe is continuously updated
     for(let i = 0; i < pipeArray.length; i++){
         let pipe = pipeArray[i];
         pipe.x += velocityX;                    /* Legelőször 360 + (-2) = 358 */
-        console.log(pipe);
+        /*console.log(pipe);*/
         context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
     }
 
@@ -123,11 +128,19 @@ function placePipes(){
     let bottompipe = {
         img : bottomPipeImg,
         x : pipeX,
-        y : randomPipeY + pipeHeight + openingSpace,        /* pl.: -128 + 512 + 160 = 544 - a randomPipeY feljebb mozgatja (a negatív irányba a háttérképhez képest) és az openingSpace pedig lejebb mozgatja (a pozitív irányba a háttérképhez képest) */
+        y : randomPipeY + pipeHeight + openingSpace,        /* pl.: -128 + 512 + 160 = 544 - a randomPipeY feljebb mozgatja (a negatív irányba a háttérképhez képest) és az openingSpace pedig lejebb mozgatja (a pozitív irányba a háttérképhez képest) ; mert ugye a háttérkép bal felső sarka a 0:0 pont ..*/
         width : pipeWidth,
         height : pipeHeight,
         passed : false
     }
 
     pipeArray.push(bottompipe);
+}
+
+function moveBird(e){
+    /*console.log(e.code)*/
+    if (e.code == 'Space' || e.code == 'ArrowUp' || e.code == 'KeyW'){
+        //  jump
+        velocityY = -6;                                     /* szintén azért mert a háttérkép bal felső sarka a 0:0 pont és felfele a minusz irány van*/
+    }
 }
