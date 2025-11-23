@@ -113,6 +113,7 @@ window.addEventListener('load', function(){
     setInterval(placePipes, 1500);              /* A setInterval()metódus meghatározott időközönként (milliszekundumban - ebben az esetben 1.5 másodpercenként) hív meg egy függvényt. A metódus addig hívja meg a függvényt, amíg clearInterval()meg nem hívják, vagy az ablakot be nem zárják. - myInterval = setInterval(function, milliseconds); */
     setInterval(animateBird, 100);              /* 1/10 másodpercenként*/
     document.addEventListener('keydown', moveBird);
+    document.addEventListener('click', moveBird);
 });
 
 function update(){
@@ -210,8 +211,8 @@ function placePipes(){
 }
 
 function moveBird(e){
-    /*console.log(e.code)*/
-    if (e.code == 'Space' || e.code == 'ArrowUp' || e.code == 'KeyW'){
+    console.log(e);
+    if (e.code == 'Space' || e.code == 'ArrowUp' || e.code == 'KeyW' || e.type == 'click'){
         //  play the sounds
         if (bgm.paused){
             bgm.play();
