@@ -54,6 +54,8 @@ let velocityX = -2;                             /* A csövek balra történő mo
 let velocityY = 0;                              /* A madár felfelé történő mozgásának a nagysága */
 let gravity = 0.4;                              /* A madár lefelé történő mozgásának a nagysága */
 
+let gameOver = false;
+
 
 
 /* The window object is supported by all browsers. It represents the browser's window. */
@@ -89,12 +91,20 @@ window.addEventListener('load', function(){
 
 function update(){
     requestAnimationFrame(update);              // <-- EZ CSINÁL FOLYAMATOS ANIMÁCIÓT!
+    if (gameOver){
+        return;
+    }
     context.clearRect(0, 0, board.width, board.height);                                 /* Kitörli a Canvas-on belüli rajzolt képkockákat - context.clearRect(x, y, width, height) */
 
     //  the bird is continuously updated (habár ezt a dupla requestAnimationFrame-et nem teljesen értem ..)
     velocityY += gravity;
-    bird.y += velocityY;
+    /*bird.y += velocityY;*/
+    bird.y = Math.max(bird.y + velocityY, 0);   /* Korlátozzuk a bird.y értékét, hogy ne tudja meghaladni (negatív értékbe szaladni) a canvas tetejét + hozzáadjuk a gravitáció vagy ugrást (velocityY-el való manipuláció ) */
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+
+    if (bird.y > board.height){
+        gameOver = true;
+    }
 
     //  the pipe is continuously updated
     for(let i = 0; i < pipeArray.length; i++){
@@ -102,11 +112,18 @@ function update(){
         pipe.x += velocityX;                    /* Legelőször 360 + (-2) = 358 */
         /*console.log(pipe);*/
         context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+    
+        if (detectCollision(bird, pipe)){
+            gameOver = true;
+        }
     }
 
 }
 
 function placePipes(){
+    if (gameOver){
+        return;
+    }
 
     /* (0-1) * pipeHeight / 2   [0 (beleértve) és 1 (kizárva) között] */
     /* 0 -> -128 ; ugyan az mint pipeHeight / 4 */
@@ -143,4 +160,12 @@ function moveBird(e){
         //  jump
         velocityY = -6;                                     /* szintén azért mert a háttérkép bal felső sarka a 0:0 pont és felfele a minusz irány van*/
     }
+}
+
+function detectCollision(birdPosition, pipePosition){
+    //  logic for checking collision between two rectangles
+    return birdPosition.x < pipePosition.x + pipePosition.width &&
+           birdPosition.x + birdPosition.width > pipePosition.x &&
+           birdPosition.y < pipePosition.y + pipePosition.height &&
+           birdPosition.y + birdPosition.height > pipePosition.y;
 }
