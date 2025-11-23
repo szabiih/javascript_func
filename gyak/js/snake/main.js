@@ -56,13 +56,24 @@ function update(){
     context.fillStyle = 'red';
     context.fillRect(foodX, foodY, blockSize, blockSize);
 
-    //  logic for checking collision between two squares
+    //  logic for checking collision between two squares AND creating a snake body
     if (snakeX == foodX && snakeY == foodY){
         snakeBody.push([foodX, foodY]);
         placeFood();
     }
 
-    //  the snake head is continuously updated
+    /* Bugos ha egyszerre engeded fel a bal fel és jobb nyilakat = vissza tud fordulni magába */
+    //  move the snake body                                    Pl.: [ A, B, C, D ] -> [ A, A, B, C ]
+    for (let i = snakeBody.length - 1; i > 0; i--){         /* A ciklus hátulról indul (a tömb utolsó indexétől) ; Minden elem megkapja az előtte lévő elem értékét ; A snakeBody[0] nem változik, mert a ciklus i > 0 feltétellel fut, így i = 0-hoz már nem jut el. */
+        snakeBody[i] = snakeBody[i-1];
+    }
+
+    //  determining the snake's head
+    if (snakeBody.length){
+        snakeBody[0] = [snakeX, snakeY];
+    }
+
+    //  the snake is continuously updated
     context.fillStyle = 'lime';
     snakeX += velocityX * blockSize;
     snakeY += velocityY * blockSize;
