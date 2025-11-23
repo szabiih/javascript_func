@@ -55,6 +55,7 @@ let velocityY = 0;                              /* A madár felfelé történő 
 let gravity = 0.4;                              /* A madár lefelé történő mozgásának a nagysága */
 
 let gameOver = false;
+let score = 0;
 
 
 
@@ -113,11 +114,20 @@ function update(){
         /*console.log(pipe);*/
         context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
     
+        if (!pipe.passed && bird.x > pipe.x + pipe.width){      /* pipe.x - a cső ball sarka ; pipe.x + pipe.width - a cső jobb sarka */
+            score += 0.5;                                       /* mert az alsó és a felső csövet is beleszámítja */
+            pipe.passed = true;
+        }
+        
         if (detectCollision(bird, pipe)){
             gameOver = true;
         }
     }
 
+    //  score
+    context.fillStyle = 'white';
+    context.font = '45px sans-serif';
+    context.fillText(score, 5, 45);             /* Kiír a Canvas-ra egy szöveget - context.fillText(text, x, y, maxWidth) */
 }
 
 function placePipes(){
