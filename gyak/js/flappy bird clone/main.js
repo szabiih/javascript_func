@@ -102,14 +102,32 @@ function update(){
 }
 
 function placePipes(){
+
+    /* (0-1) * pipeHeight / 2   [0 (beleértve) és 1 (kizárva) között] */
+    /* 0 -> -128 ; ugyan az mint pipeHeight / 4 */
+    /* 1 -> -128 - 256 = -384 ; (pipeHeight / 4 - pipeHeight / 2) -1/4 pipeHeight */
+    let randomPipeY = pipeY - pipeHeight / 4 - Math.random() * (pipeHeight / 2);        /* -1/4 és -3/4 magasság között lehet a pipeHeight (ennyivel mozgatjuk feljebb) */
+    let openingSpace = board.height / 4;
+
     let topPipe = {
         img : topPipeImg,
         x : pipeX,
-        y : pipeY,
+        y : randomPipeY,
         width : pipeWidth,
         height : pipeHeight,
         passed : false                      /* A flappy bird áthaladt-e már a csövön vagy sem */
     }
 
     pipeArray.push(topPipe);
+
+    let bottompipe = {
+        img : bottomPipeImg,
+        x : pipeX,
+        y : randomPipeY + pipeHeight + openingSpace,        /* pl.: -128 + 512 + 160 = 544 - a randomPipeY feljebb mozgatja (a negatív irányba a háttérképhez képest) és az openingSpace pedig lejebb mozgatja (a pozitív irányba a háttérképhez képest) */
+        width : pipeWidth,
+        height : pipeHeight,
+        passed : false
+    }
+
+    pipeArray.push(bottompipe);
 }
