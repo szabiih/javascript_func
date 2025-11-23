@@ -49,6 +49,8 @@ let topPipeImg;
  */
 let bottomPipeImg;
 
+//  P H Y S I C S
+let velocityX = -2;                             /* A csövek balra történő mozgásának a sebessége */
 
 
 
@@ -83,15 +85,17 @@ window.addEventListener('load', function(){
 });
 
 function update(){
-    requestAnimationFrame(update);
+    requestAnimationFrame(update);              // <-- EZ CSINÁL FOLYAMATOS ANIMÁCIÓT!
     context.clearRect(0, 0, board.width, board.height);                                 /* Kitörli a Canvas-on belüli rajzolt képkockákat - context.clearRect(x, y, width, height) */
 
     //  the bird is continuously updated (habár ezt a dupla requestAnimationFrame-et nem teljesen értem ..)
-    context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height)
+    context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
-    //  pipes
+    //  the pipe is continuously updated
     for(let i = 0; i < pipeArray.length; i++){
         let pipe = pipeArray[i];
+        pipe.x += velocityX;                    /* Legelőször 360 + (-2) = 358 */
+        console.log(pipe);
         context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
     }
 
