@@ -117,6 +117,7 @@ window.addEventListener('load', function(){
 });
 
 function update(){
+    console.log('UPDATE');
     requestAnimationFrame(update);              // <-- EZ CSINÁL FOLYAMATOS ANIMÁCIÓT!
     if (gameOver){
         return;
@@ -211,7 +212,8 @@ function placePipes(){
 }
 
 function moveBird(e){
-    console.log(e);
+    //console.log(e);
+    console.log('MOVE');
     if (e.code == 'Space' || e.code == 'ArrowUp' || e.code == 'KeyW' || e.type == 'click'){
         //  play the sounds
         if (bgm.paused){
