@@ -133,6 +133,10 @@ function update(){
     context.fillStyle = 'white';
     context.font = '45px sans-serif';
     context.fillText(score, 5, 45);             /* Kiír a Canvas-ra egy szöveget - context.fillText(text, x, y, maxWidth) */
+
+    if (gameOver){
+        context.fillText('GAME OVER', 5, 90);
+    }
 }
 
 function placePipes(){
@@ -174,6 +178,14 @@ function moveBird(e){
     if (e.code == 'Space' || e.code == 'ArrowUp' || e.code == 'KeyW'){
         //  jump
         velocityY = -6;                                     /* szintén azért mert a háttérkép bal felső sarka a 0:0 pont és felfele a minusz irány van*/
+    
+        //  reset game
+        if (gameOver){
+            bird.y = birdY;
+            pipeArray = [];
+            score = 0;
+            gameOver = false;
+        }
     }
 }
 
