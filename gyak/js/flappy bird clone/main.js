@@ -1,3 +1,6 @@
+//  https://www.youtube.com/watch?v=jj5ADM2uywg
+//  https://www.youtube.com/watch?v=UQA5jG-yh78
+
 //  B O A R D
 /**
  * @type {HTMLCanvasElement}
@@ -56,6 +59,21 @@ let gravity = 0.4;                              /* A madár lefelé történő m
 
 let gameOver = false;
 let score = 0;
+
+//  S O U N D S
+/**
+ * @type {HTMLAudioElement}
+ */
+let wingSound01 = new Audio('./sounds/enter_button01.mp3');                    /* The Audio object represents an HTML <audio> element. */
+/**
+ * @type {HTMLAudioElement}
+ */
+let hitSound = new Audio('./sounds/kriszhadvice_sound.mp3');
+/**
+ * @type {HTMLAudioElement}
+ */
+let bgm = new Audio('./sounds/Fortnite_Festive_Lobby_Music_(C1S7 Battle Pass)_LVP.mp3');
+bgm.loop = true;
 
 
 
@@ -120,6 +138,7 @@ function update(){
         }
         
         if (detectCollision(bird, pipe)){
+            hitSound.play();
             gameOver = true;
         }
     }
@@ -136,6 +155,8 @@ function update(){
 
     if (gameOver){
         context.fillText('GAME OVER', 5, 90);
+        bgm.pause();
+        bgm.currentTime = 0;
     }
 }
 
@@ -176,6 +197,12 @@ function placePipes(){
 function moveBird(e){
     /*console.log(e.code)*/
     if (e.code == 'Space' || e.code == 'ArrowUp' || e.code == 'KeyW'){
+        //  play the sounds
+        if (bgm.paused){
+            bgm.play();
+        }
+        wingSound01.play();
+
         //  jump
         velocityY = -6;                                     /* szintén azért mert a háttérkép bal felső sarka a 0:0 pont és felfele a minusz irány van*/
     
