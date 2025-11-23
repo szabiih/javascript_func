@@ -30,6 +30,8 @@ let foodY;
 let velocityX = 0;
 let velocityY = 0;
 
+let gameOver = false;
+
 
 
 /* The window object is supported by all browsers. It represents the browser's window. */
@@ -48,6 +50,10 @@ window.addEventListener('load', function(){
 });
 
 function update(){
+    if (gameOver){
+        return;
+    }
+
     //  the background is continuously updated
     context.fillStyle = 'black';
     context.fillRect(0, 0, board.width, board.height);
@@ -80,6 +86,19 @@ function update(){
     context.fillRect(snakeX, snakeY, blockSize, blockSize);
     for (let i = 0; i < snakeBody.length; i++){
         context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
+    }
+
+    //  game over conditions
+    if (snakeX < 0 || snakeX > cols * blockSize || snakeY < 0 || snakeY > rows * blockSize){
+        gameOver = true;
+        alert('Game Over');
+    }
+
+    for (let i = 0; i < snakeBody.length; i++){
+        if (snakeX == snakeBody[i][0] && snakeY == snakeBody[i][1]){
+            gameOver = true;
+            alert('Game Over');
+        }
     }
 }
 
